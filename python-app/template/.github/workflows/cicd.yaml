@@ -101,6 +101,4 @@ jobs:
             --sync-option CreateNamespace=true
           #Syncs the app
           argocd app sync ${{values.app_name}}
-          argocd app wait ${{values.app_name}} \
-            --resource apps:Deployment:${{values.app_name}} \
-            --timeout 300
+          argocd app wait ${{values.app_name}} --sync --timeout 120
