@@ -8,8 +8,8 @@ on:
       - main
 
 env:
-  APP_NAME: {{ values.app_name }}
-  APP_ENV: {{ values.app_env }}
+  APP_NAME: ${{values.app_name}}
+  APP_ENV: ${{values.app_env}}
 
 jobs:
   ci:
