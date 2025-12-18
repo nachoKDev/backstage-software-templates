@@ -78,8 +78,15 @@ jobs:
           chmod +x argocd
           sudo mv argocd /usr/local/bin/argocd
 
-      - name: Ensure ArgoCD repo and app exist
+      - name: Ensure ArgoCD repo and app exist and sync
         run: |
+          #Logs into argocd
+          argocd login argocd-server.argocd \
+            --insecure \
+            --grpc-web \
+            --username admin \
+            --password ${{ '${{ secrets.ARGOCD_PASSWORD }}' }}
+
           #Connects the argocd repo
           repo="https://github.com/orgs/nachoKDevOrg/${{values.app_name}}.git"
           argocd repo list | grep -q $repo || argocd repo add $repo
@@ -92,13 +99,6 @@ jobs:
             --dest-namespace default \
             --sync-policy manual \
             --sync-option CreateNamespace=true
-         
-      - name: ArgoCD app sync
-        run: |
-          argocd login argocd-server.argocd \
-            --insecure \
-            --grpc-web \
-            --username admin \
-            --password ${{ '${{ secrets.ARGOCD_PASSWORD }}' }}
+          #Syncs the app
           argocd app sync ${{values.app_name}}
           argocd app wait ${{values.app_name}} --timeout 180
