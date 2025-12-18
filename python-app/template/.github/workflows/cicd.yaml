@@ -35,8 +35,8 @@ jobs:
         with:
           push: true
           tags: |
-            nachokork/{{$values.app_name}}:latest
-            nachokork/{{$values.app_name}}:${{ '${{ steps.vars.outputs.tag }}' }}
+            nachokork/${{values.app_name}}:latest
+            nachokork/${{values.app_name}}:${{ '${{ steps.vars.outputs.tag }}' }}
 
     outputs:
       commit_id: ${{ '${{ steps.vars.outputs.tag }}' }}
