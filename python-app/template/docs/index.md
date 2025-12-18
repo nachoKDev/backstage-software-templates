@@ -9,4 +9,4 @@ This application has two endpoints:
 
 # How to acces the app?
 
-You can access the app by accessing al this URL: `${values.app_name}-${values.app_env}.test.com/api/v1/info`
+You can access the app by accessing al this URL: `${{values.app_name}}-${{values.app_env}}.test.com/api/v1/info`
