@@ -16,6 +16,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
+      - name: Shorten commit id
+        shell: bash
+        run: |
+          echo "COMMIT_ID=${GITHUB_SHA::6}" >> "$GITHUB_ENV"
+    
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -30,6 +36,7 @@ jobs:
         with:
           username: ${{ '${{ secrets.DOCKERHUB_USERNAME }}' }}
           password: ${{ '${{ secrets.DOCKERHUB_TOKEN }}' }}
+      
       - name: Set image tag
         id: vars
         run: |
@@ -41,11 +48,11 @@ jobs:
         with:
           push: true
           tags: |
-            nachokork/${{ env.APP_NAME }}:latest
-            nachokork/${{ env.APP_NAME }}:${{ steps.vars.outputs.tag }}
+            nachokork/$APP_NAME:latest
+            nachokork/$APP_NAME:${{ '${{ env.COMMIT_ID }}' }}
 
     outputs:
-      commit_id: ${{ steps.vars.outputs.tag }}
+      commit_id: ${{ '${{ env.COMMIT_ID }}' }}
 
   cd:
     needs: ci
@@ -62,14 +69,13 @@ jobs:
 
       - name: Modify values file
         run: |
-          TAG="${{ needs.ci.outputs.commit_id }}"
-          echo "Setting image tag to $TAG"
-          yq -i '.image.tag = strenv(TAG)' charts/$APP_NAME/values-$APP_ENV.yaml
+          echo ${{ '${{needs.ci.outputs.commit_id}}' }}
+          yq -i '.image.tag = "${{'${{needs.ci.outputs.commit_id}}' }}"' charts/$APP_NAME/values-$APP_ENV.yaml
 
       - name: Commit changes to repo
         uses: EndBug/add-and-commit@v9
         with:
-          message: "Update image tag to ${{ needs.ci.outputs.commit_id }}"
+          message: 'Updates values.yaml with commit ${{ '${{needs.ci.outputs.commit_id}}' }}'
 
       - name: Install argocd
         run: |
