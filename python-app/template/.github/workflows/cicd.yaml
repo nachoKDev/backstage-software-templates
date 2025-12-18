@@ -77,28 +77,34 @@ jobs:
           curl -k -sSL -o argocd https://argocd-server.argocd/download/argocd-linux-amd64
           chmod +x argocd
           sudo mv argocd /usr/local/bin/argocd
-
-      - name: Ensure ArgoCD repo and app exist and sync
+      - name: argocd login
+        shell: bash
         run: |
-          #Logs into argocd
           argocd login argocd-server.argocd \
-            --insecure \
+            --insecure  \
             --grpc-web \
             --username admin \
-            --password ${{ '${{ secrets.ARGOCD_PASSWORD }}' }}
-
+            --password  ${{ '${{ secrets.ARGOCD_PASSWORD }}' }}
+            
+      - name: Ensure ArgoCD repo and app
+        run: |
           #Connects the argocd repo
           repo="https://github.com/nachoKDevOrg/${{values.app_name}}.git"
           argocd repo list | grep -q $repo || argocd repo add $repo
 
-          #Creates the app
+          # Creates the argocd app
           argocd app get ${{values.app_name}} || argocd app create ${{values.app_name}} \
             --repo $repo \
             --path charts/${{values.app_name}} \
+            --dest-namespace ${{values.app_env}} \
             --dest-server https://kubernetes.default.svc \
-            --dest-namespace default \
+            --values values-${{values.app_env}}.yaml \
+            --revision main \
             --sync-policy manual \
             --sync-option CreateNamespace=true
-          #Syncs the app
+
+      - name: Argocd app sync
+        shell: bash
+        run: |
           argocd app sync ${{values.app_name}}
-          argocd app wait ${{values.app_name}} --sync --timeout 120
+          argocd app wait ${{values.app_name}} --timeout 180
