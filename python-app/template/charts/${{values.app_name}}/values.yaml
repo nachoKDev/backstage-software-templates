@@ -58,7 +58,7 @@ ingress:
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: "${{values.app_name}}-${values.app_env}.test.com"
+    - host: "${{values.app_name}}-${{values.app_env}}.test.com"
       paths:
         - path: /
           pathType: Prefix
