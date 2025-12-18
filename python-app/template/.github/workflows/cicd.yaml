@@ -81,7 +81,7 @@ jobs:
       - name: Ensure ArgoCD repo and app exist
         run: |
           #Connects the argocd repo
-          repo ="https://github.com/orgs/nachoKDevOrg/${{values.app_name}}.git"
+          repo="https://github.com/orgs/nachoKDevOrg/${{values.app_name}}.git"
           argocd repo list | grep -q $repo || argocd repo add $repo
 
           #Creates the app
