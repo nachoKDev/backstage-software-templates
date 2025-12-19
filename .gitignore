@@ -1,0 +1,9 @@
+./symfony-app/template/src/var/*
+./symfony-app/template/src/vendor/*
+./symfony-app/template/.env.local
+./symfony-app/template/.env.test.local
+./symfony-app/template/phpunit.xml
+./symfony-app/template/.phpunit.cache/
+./symfony-app/template/public/assets/
+./symfony-app/template/assets/vendor/
+./symfony-app/template/public/bundles/

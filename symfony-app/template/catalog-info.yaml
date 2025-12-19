@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.app_name }}
+  description: Thats a template to create a  Symfony 7.3 API
+  annotations:
+    github.com/project-slug: nachoKDevOrg/${{ values.app_name }}
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  owner: development
+  lifecycle: experimental
+  system: platform-core
+  providesApis:
+    - symfony-api
+
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: symfony-api
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: development
+  system: platform-core
+  definition:
+    $text: ./docs/api.md

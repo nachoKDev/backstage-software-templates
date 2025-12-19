@@ -1,0 +1,12 @@
+site_name: '${values.app_name} Documentation'
+site_description: 'Main documentation site for the Symfony App project.'
+repo_url: https://github.com/nachoKDev/${{ values.app_name }}
+edit_uri: edit/main/docs
+
+plugins:
+  - techdocs-core
+
+# For sidebar navigation on https://backstage.io/, see `microsite/sidebars.js`
+nav:
+  - Overview: index.md
+  - API: api.md

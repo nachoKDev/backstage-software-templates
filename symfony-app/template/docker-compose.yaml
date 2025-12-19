@@ -1,0 +1,70 @@
+version: "3.9"
+
+services:
+
+  # Iniciar este contenedor una vez para crear el proyecto Symfony con 
+  # !-! docker compose run --rm symfony-bootstrap !-! 
+  # symfony-bootstrap:
+  #   image: composer:2
+  #   container_name: symfony_bootstrap
+  #   working_dir: /app
+  #   volumes:
+  #     - ./app:/app
+  #   command: >
+  #     sh -c "
+  #     composer create-project symfony/skeleton:'8.0.*' . &&
+  #     composer require webapp
+  #     "
+
+  symfony_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: symfony_api
+    ports:
+      - "8100:8000"
+    volumes:
+      - ./app:/app
+    environment:
+      APP_ENV: dev
+      DATABASE_URL: "postgresql://templateS:templateS@db:5432/templateS?serverVersion=13"
+      REDIS_URL: "redis://redis:6379"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - app_network
+    command: >
+      sh -c "php -S 0.0.0.0:8000 -t public"
+
+  db:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: templateS
+      POSTGRES_PASSWORD: templateS
+      POSTGRES_DB: templateS
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  redis:
+    image: redis:6
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app_network
+
+volumes:
+  pgdata:
+  redis_data:
+
+networks:
+  app_network:
+    driver: bridge
