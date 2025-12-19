@@ -1,7 +1,7 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: Symfony API Template
+  name: Symfony-API-Template
   title: Symfony API Template
   description: Thats a template to create a Symfony API
 spec:
