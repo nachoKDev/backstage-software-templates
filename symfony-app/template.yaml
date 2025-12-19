@@ -1,9 +1,9 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: Symfony 7.3 API Template
-  title: Symfony 7.3 API Template
-  description: Thats a template to create a Symfony 7.3 API
+  name: Symfony API Template
+  title: Symfony API Template
+  description: Thats a template to create a Symfony API
 spec:
   owner: development
   type: service

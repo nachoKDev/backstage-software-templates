@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: ${{ values.app_name }}
-  description: Thats a template to create a  Symfony 7.3 API
+  description: Thats a template to create a  Symfony API
   annotations:
     github.com/project-slug: nachoKDevOrg/${{ values.app_name }}
     backstage.io/techdocs-ref: dir:.
