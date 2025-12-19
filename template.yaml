@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: all-templates
+spec:
+  type: url
+  targets:
+    - ./python-app/template.yaml
+    - ./symfony-app/template.yaml
