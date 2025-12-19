@@ -3,19 +3,19 @@ version: "3.9"
 services:
 
   # Iniciar este contenedor una vez para crear el proyecto Symfony con 
-  # !-! docker compose run --rm symfony-bootstrap !-! 
+  # !-! docker compose run --rm symfony-bootstrap !! 
   # symfony-bootstrap:
   #   image: composer:2
   #   container_name: symfony_bootstrap
-  #   working_dir: /app
+  #   working_dir: /src
   #   volumes:
-  #     - ./app:/app
+  #     - ./src:/src
   #   command: >
   #     sh -c "
-  #     composer create-project symfony/skeleton:'8.0.*' . &&
-  #     composer require webapp
+  #     composer create-project symfony/skeleton:'7.3.*' . &&
+  #     composer require webapp 
   #     "
-
+       
   symfony_api:
     build:
       context: .
@@ -24,7 +24,7 @@ services:
     ports:
       - "8100:8000"
     volumes:
-      - ./app:/app
+      - ./src:/src
     environment:
       APP_ENV: dev
       DATABASE_URL: "postgresql://templateS:templateS@db:5432/templateS?serverVersion=13"
