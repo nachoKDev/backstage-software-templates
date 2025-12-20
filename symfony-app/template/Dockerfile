@@ -13,17 +13,14 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /src
 
-# Copiamos solo lo necesario para instalar deps (cache friendly)
-COPY ./src/composer.json ./src/composer.lock ./
+# Copiamos TODA la app (incluye bin/console)
+COPY ./src /src
 
 # Instalamos dependencias
 RUN composer install \
     --no-interaction \
     --no-progress \
     --prefer-dist
-
-# Copiamos el resto del código
-COPY ./src .
 
 # Servidor HTTP (DEV)
 CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
