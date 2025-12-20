@@ -1,4 +1,4 @@
-site_name: '${values.app_name} Documentation'
+site_name: '${{values.app_name}} Documentation'
 site_description: 'Main documentation site for the Symfony App project.'
 repo_url: https://github.com/nachoKDev/${{ values.app_name }}
 edit_uri: edit/main/docs
