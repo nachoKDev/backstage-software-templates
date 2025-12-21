@@ -26,4 +26,4 @@ spec:
   owner: development
   system: platform-core
   definition:
-    $text: ./docs/index.md
+    $text: ./docs/openApi/openApi.yaml

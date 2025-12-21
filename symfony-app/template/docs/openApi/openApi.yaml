@@ -1,0 +1,86 @@
+openapi: 3.0.3
+
+info:
+  title: Example API
+  description: >
+    REST API providing health and service information endpoints.
+  version: 1.0.0
+  contact:
+    name: Platform Team
+    email: platform@example.com
+
+servers:
+  - url: http://localhost:8080
+    description: Local environment
+  - url: https://api.example.com
+    description: Production environment
+
+paths:
+  /api/v1/healthz:
+    get:
+      summary: Health check
+      description: Returns the health status of the service.
+      operationId: getHealth
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: ok
+
+  /api/v1/info:
+    get:
+      summary: Service information
+      description: Returns metadata about the running service.
+      operationId: getServiceInfo
+      tags:
+        - Info
+      responses:
+        '200':
+          description: Service information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoResponse'
+              example:
+                service: example-api
+                version: 1.0.0
+                environment: prod
+                timestamp: "2025-12-21T12:30:00+01:00"
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: ok
+      required:
+        - status
+
+    InfoResponse:
+      type: object
+      properties:
+        service:
+          type: string
+          example: example-api
+        version:
+          type: string
+          example: 1.0.0
+        environment:
+          type: string
+          example: prod
+        timestamp:
+          type: string
+          format: date-time
+      required:
+        - service
+        - version
+        - environment
+        - timestamp
